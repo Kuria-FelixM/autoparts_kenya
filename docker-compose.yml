@@ -1,0 +1,150 @@
+version: '3.9'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: autoparts_db
+    environment:
+      POSTGRES_DB: autoparts_kenya
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - autoparts
+    command: postgres -c log_statement=all
+
+  # Redis Cache & Celery Broker
+  redis:
+    image: redis:7-alpine
+    container_name: autoparts_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - autoparts
+
+  # Django Web Application
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: autoparts_web
+    command: >
+      sh -c "
+        python manage.py migrate &&
+        python manage.py collectstatic --noinput &&
+        gunicorn autoparts_kenya.wsgi:application --bind 0.0.0.0:8000
+      "
+    environment:
+      DEBUG: "True"
+      SECRET_KEY: "django-insecure-development-key-change-in-production"
+      ALLOWED_HOSTS: "localhost,127.0.0.1,web"
+      DB_ENGINE: "django.db.backends.postgresql"
+      DB_NAME: "autoparts_kenya"
+      DB_USER: "postgres"
+      DB_PASSWORD: "postgres"
+      DB_HOST: "db"
+      DB_PORT: "5432"
+      CELERY_BROKER_URL: "redis://redis:6379/0"
+      CELERY_RESULT_BACKEND: "redis://redis:6379/0"
+      MPESA_ENVIRONMENT: "sandbox"
+      MPESA_CONSUMER_KEY: "test_key"
+      MPESA_CONSUMER_SECRET: "test_secret"
+      MPESA_BUSINESS_SHORTCODE: "174379"
+      MPESA_PASSKEY: "bfb279f9aa9bdbcf158e97dd1a503b6015d86d3b50c3cc1f"
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+      - logs_volume:/app/logs
+    networks:
+      - autoparts
+
+  # Celery Worker
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: autoparts_celery
+    command: celery -A autoparts_kenya worker -l info
+    environment:
+      DEBUG: "True"
+      SECRET_KEY: "django-insecure-development-key"
+      DB_ENGINE: "django.db.backends.postgresql"
+      DB_NAME: "autoparts_kenya"
+      DB_USER: "postgres"
+      DB_PASSWORD: "postgres"
+      DB_HOST: "db"
+      DB_PORT: "5432"
+      CELERY_BROKER_URL: "redis://redis:6379/0"
+      CELERY_RESULT_BACKEND: "redis://redis:6379/0"
+    depends_on:
+      - db
+      - redis
+      - web
+    volumes:
+      - .:/app
+      - logs_volume:/app/logs
+    networks:
+      - autoparts
+
+  # Celery Beat (Scheduled Tasks)
+  celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: autoparts_beat
+    command: celery -A autoparts_kenya beat -l info
+    environment:
+      DEBUG: "True"
+      SECRET_KEY: "django-insecure-development-key"
+      DB_ENGINE: "django.db.backends.postgresql"
+      DB_NAME: "autoparts_kenya"
+      DB_USER: "postgres"
+      DB_PASSWORD: "postgres"
+      DB_HOST: "db"
+      DB_PORT: "5432"
+      CELERY_BROKER_URL: "redis://redis:6379/0"
+      CELERY_RESULT_BACKEND: "redis://redis:6379/0"
+    depends_on:
+      - db
+      - redis
+      - celery
+    volumes:
+      - .:/app
+      - logs_volume:/app/logs
+    networks:
+      - autoparts
+
+volumes:
+  postgres_data:
+  redis_data:
+  static_volume:
+  media_volume:
+  logs_volume:
+
+networks:
+  autoparts:
+    driver: bridge
