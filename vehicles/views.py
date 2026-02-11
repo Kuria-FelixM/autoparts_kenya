@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExamples
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 
 from core.permissions import IsOwnerOrReadOnly
 from vehicles.models import VehicleMake, VehicleModel
@@ -51,7 +51,7 @@ class VehicleMakeViewSet(viewsets.ModelViewSet):
                 required=False,
                 type=str,
                 location='query',
-                examples=[OpenApiExamples('example', value='Toyota')]
+                examples=[OpenApiExample('example', value='Toyota')]
             ),
             OpenApiParameter(
                 name='ordering',
@@ -91,7 +91,7 @@ class VehicleMakeViewSet(viewsets.ModelViewSet):
             401: {'description': 'Unauthorized - owner access required'},
         },
         examples=[
-            OpenApiExamples(
+            OpenApiExample(
                 'example_make',
                 summary='Example vehicle make',
                 value={
@@ -217,7 +217,7 @@ class VehicleModelViewSet(viewsets.ModelViewSet):
             401: {'description': 'Unauthorized - owner access required'},
         },
         examples=[
-            OpenApiExamples(
+            OpenApiExample(
                 'example_model',
                 summary='Example vehicle model',
                 value={

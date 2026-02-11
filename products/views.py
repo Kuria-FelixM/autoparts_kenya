@@ -8,7 +8,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExamples
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from django.db.models import Q, F, Count, DecimalField
 from django.db.models.functions import Coalesce
 
@@ -280,7 +280,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             401: {'description': 'Unauthorized'},
         },
         examples=[
-            OpenApiExamples(
+            OpenApiExample(
                 'example_product',
                 summary='Example product',
                 value={

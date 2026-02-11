@@ -8,7 +8,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth.models import User
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExamples
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 
 from core.permissions import IsAuthenticatedOrReadOnly
 from users.models import UserProfile, SavedVehicle, SavedAddress
@@ -47,7 +47,7 @@ class RegistrationView(generics.CreateAPIView):
             400: {'description': 'Validation error (username/email taken, passwords mismatch, etc.)'},
         },
         examples=[
-            OpenApiExamples(
+            OpenApiExample(
                 'example_registration',
                 summary='Example registration',
                 value={
@@ -159,7 +159,7 @@ class SavedVehicleViewSet(viewsets.ModelViewSet):
             401: {'description': 'Unauthorized'},
         },
         examples=[
-            OpenApiExamples(
+            OpenApiExample(
                 'example_save_vehicle',
                 summary='Example saved vehicle',
                 value={
@@ -273,7 +273,7 @@ class SavedAddressViewSet(viewsets.ModelViewSet):
             401: {'description': 'Unauthorized'},
         },
         examples=[
-            OpenApiExamples(
+            OpenApiExample(
                 'example_save_address',
                 summary='Example saved address',
                 value={

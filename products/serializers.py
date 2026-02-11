@@ -5,6 +5,7 @@ Serializers for products and categories.
 from rest_framework import serializers
 from products.models import Category, Product, ProductImage
 from vehicles.serializers import VehicleModelSerializer
+from vehicles.models import VehicleModel
 
 
 class ProductImageSerializer(serializers.ModelSerializer):

@@ -3,6 +3,7 @@ URL routing for orders app.
 """
 
 from django.urls import path, include
+from django.urls import converters
 from rest_framework.routers import DefaultRouter
 
 from orders.views import (
@@ -11,6 +12,10 @@ from orders.views import (
     OrderDetailView,
     OwnerOrdersViewSet,
 )
+
+# Workaround for DRF converter registration issue
+if 'drf_format_suffix' in converters.REGISTERED_CONVERTERS:
+    del converters.REGISTERED_CONVERTERS['drf_format_suffix']
 
 router = DefaultRouter()
 router.register(r'admin/orders', OwnerOrdersViewSet, basename='admin-orders')

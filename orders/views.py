@@ -7,7 +7,7 @@ from rest_framework import generics, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExamples
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from django.db.models import Q
 
 from core.permissions import IsOwner
@@ -46,7 +46,7 @@ class CheckoutView(generics.CreateAPIView):
             400: {'description': 'Invalid cart or delivery info'},
         },
         examples=[
-            OpenApiExamples(
+            OpenApiExample(
                 'example_checkout',
                 summary='Example checkout',
                 value={
