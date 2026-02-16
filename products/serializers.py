@@ -27,6 +27,10 @@ class CategorySerializer(serializers.ModelSerializer):
             'parent', 'is_active', 'display_order', 'products_count', 'created_at'
         ]
         read_only_fields = ['id', 'created_at']
+    
+    def get_products_count(self, obj):
+        """Count active products in this category."""
+        return obj.products.filter(is_active=True).count()
 
 
 class CategoryDetailSerializer(serializers.ModelSerializer):

@@ -41,13 +41,13 @@ INSTALLED_APPS = [
     'corsheaders',
     
     # Local apps
-    'core.apps.CoreConfig',
-    'users.apps.UsersConfig',
-    'vehicles.apps.VehiclesConfig',
-    'products.apps.ProductsConfig',
-    'orders.apps.OrdersConfig',
-    'payments.apps.PaymentsConfig',
-    'analytics.apps.AnalyticsConfig',
+    'core',
+    'users',
+    'vehicles',
+    'products',
+    'orders',
+    'payments',
+    'analytics',
 ]
 
 MIDDLEWARE = [

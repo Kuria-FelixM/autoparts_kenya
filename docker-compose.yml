@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   # PostgreSQL Database
   db:
@@ -7,8 +5,8 @@ services:
     container_name: autoparts_db
     environment:
       POSTGRES_DB: autoparts_kenya
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: autoparts_user
+      POSTGRES_PASSWORD: autoPartsKe
     ports:
       - "5432:5432"
     volumes:
@@ -46,7 +44,9 @@ services:
     container_name: autoparts_web
     command: >
       sh -c "
-        python manage.py migrate &&
+        until python manage.py migrate; do
+          echo 'Waiting for database...'; sleep 2
+        done &&
         python manage.py collectstatic --noinput &&
         gunicorn autoparts_kenya.wsgi:application --bind 0.0.0.0:8000
       "
@@ -56,8 +56,8 @@ services:
       ALLOWED_HOSTS: "localhost,127.0.0.1,web"
       DB_ENGINE: "django.db.backends.postgresql"
       DB_NAME: "autoparts_kenya"
-      DB_USER: "postgres"
-      DB_PASSWORD: "postgres"
+      DB_USER: "autoparts_user"
+      DB_PASSWORD: "autoPartsKe"
       DB_HOST: "db"
       DB_PORT: "5432"
       CELERY_BROKER_URL: "redis://redis:6379/0"
@@ -94,8 +94,8 @@ services:
       SECRET_KEY: "django-insecure-development-key"
       DB_ENGINE: "django.db.backends.postgresql"
       DB_NAME: "autoparts_kenya"
-      DB_USER: "postgres"
-      DB_PASSWORD: "postgres"
+      DB_USER: "autoparts_user"
+      DB_PASSWORD: "autoPartsKe"
       DB_HOST: "db"
       DB_PORT: "5432"
       CELERY_BROKER_URL: "redis://redis:6379/0"
@@ -122,8 +122,8 @@ services:
       SECRET_KEY: "django-insecure-development-key"
       DB_ENGINE: "django.db.backends.postgresql"
       DB_NAME: "autoparts_kenya"
-      DB_USER: "postgres"
-      DB_PASSWORD: "postgres"
+      DB_USER: "autoparts_user"
+      DB_PASSWORD: "autoPartsKe"
       DB_HOST: "db"
       DB_PORT: "5432"
       CELERY_BROKER_URL: "redis://redis:6379/0"

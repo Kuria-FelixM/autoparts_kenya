@@ -1,6 +1,7 @@
 """
 Product views: categories and products with vehicle compatibility filtering.
 Public read access (guest-first), owner-only write access.
+FIXED: Parameter naming now matches frontend expectations
 """
 
 from rest_framework import viewsets, status, filters
@@ -124,6 +125,8 @@ class ProductViewSet(viewsets.ModelViewSet):
     Products with vehicle compatibility filtering.
     Advanced filters: vehicle make, model, year, category, price range, etc.
     Guest-first: GET is public, POST/PUT/DELETE for owner only.
+    
+    FIXED: Now accepts both min_price/max_price AND categories (comma-separated)
     """
     queryset = Product.objects.prefetch_related('compatible_vehicles', 'images', 'category').filter(is_active=True)
     permission_classes = [IsOwnerOrReadOnly]
@@ -142,7 +145,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         return ProductListSerializer
     
     def get_queryset(self):
-        """Add vehicle compatibility filtering."""
+        """Add vehicle compatibility filtering with FIXED parameter names."""
         qs = super().get_queryset()
         
         # Filter by vehicle compatibility
@@ -167,9 +170,9 @@ class ProductViewSet(viewsets.ModelViewSet):
             except (ValueError, TypeError):
                 pass
         
-        # Price filtering
-        price_min = self.request.query_params.get('price_min')
-        price_max = self.request.query_params.get('price_max')
+        # FIXED: Price filtering - accept BOTH naming conventions
+        price_min = self.request.query_params.get('min_price') or self.request.query_params.get('price_min')
+        price_max = self.request.query_params.get('max_price') or self.request.query_params.get('price_max')
         
         if price_min:
             try:
@@ -180,6 +183,17 @@ class ProductViewSet(viewsets.ModelViewSet):
         if price_max:
             try:
                 qs = qs.filter(price__lte=float(price_max))
+            except (ValueError, TypeError):
+                pass
+        
+        # FIXED: Categories filtering - accept comma-separated string
+        categories = self.request.query_params.get('categories')
+        if categories:
+            try:
+                # Split comma-separated string and filter by multiple categories
+                category_ids = [int(cat_id.strip()) for cat_id in categories.split(',') if cat_id.strip()]
+                if category_ids:
+                    qs = qs.filter(category__id__in=category_ids)
             except (ValueError, TypeError):
                 pass
         
@@ -214,19 +228,19 @@ class ProductViewSet(viewsets.ModelViewSet):
                 type=int,
             ),
             OpenApiParameter(
-                name='category',
-                description='Filter by category ID',
+                name='categories',
+                description='Filter by category IDs (comma-separated: e.g., "1,2,3")',
                 required=False,
-                type=int,
+                type=str,
             ),
             OpenApiParameter(
-                name='price_min',
+                name='min_price',
                 description='Minimum price (KSh)',
                 required=False,
                 type=float,
             ),
             OpenApiParameter(
-                name='price_max',
+                name='max_price',
                 description='Maximum price (KSh)',
                 required=False,
                 type=float,
