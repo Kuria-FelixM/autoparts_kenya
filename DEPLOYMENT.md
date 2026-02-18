@@ -54,22 +54,28 @@ cd backend
 ### Step 4: Configure Environment (3 min)
 
 ```bash
-# Generate secure credentials
-DJANGO_SECRET=$(python3 -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')
-DB_PASSWORD=$(openssl rand -base64 32)
-REDIS_PASSWORD=$(openssl rand -base64 32)
-
 # Copy environment template
 cp docker/.env.production .env
 
-# Edit .env with your values
+# Generate secure credentials (no Django needed!)
+DJANGO_SECRET=$(openssl rand -base64 64)
+DB_PASSWORD=$(openssl rand -base64 32)
+REDIS_PASSWORD=$(openssl rand -base64 32)
+
+# Update .env with generated values
+sed -i "s/SECRET_KEY=.*/SECRET_KEY=$DJANGO_SECRET/" .env
+sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$DB_PASSWORD/" .env
+sed -i "s/REDIS_PASSWORD=.*/REDIS_PASSWORD=$REDIS_PASSWORD/" .env
+
+# Verify values were set
+echo "✅ Secrets generated:"
+grep -E "SECRET_KEY|DB_PASSWORD|REDIS_PASSWORD" .env | head -3
+
+# Now edit remaining values manually
 nano .env
 # Update:
-# - SECRET_KEY=$DJANGO_SECRET
-# - DB_PASSWORD=$DB_PASSWORD
-# - REDIS_PASSWORD=$REDIS_PASSWORD
-# - ALLOWED_HOSTS=your_domain.com
-# - CORS_ALLOWED_ORIGINS=https://your_frontend_domain.com
+# - ALLOWED_HOSTS=your_droplet_ip  (or your_domain.com when ready)
+# - CORS_ALLOWED_ORIGINS=*         (adjust before going live)
 # - MPESA keys (production)
 ```
 
