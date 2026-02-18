@@ -1,0 +1,177 @@
+version: '3.9'
+
+services:
+  # ============================================
+  # PostgreSQL Database (Production Grade)
+  # ============================================
+  db:
+    image: postgres:15-alpine
+    container_name: autoparts_db_prod
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8"
+    ports:
+      - "127.0.0.1:5432:5432"  # Only accessible from localhost
+    volumes:
+      - postgres_prod_data:/var/lib/postgresql/data
+      - ./backups:/backups
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - autoparts
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ============================================
+  # Redis Cache & Message Broker
+  # ============================================
+  redis:
+    image: redis:7-alpine
+    container_name: autoparts_redis_prod
+    restart: always
+    ports:
+      - "127.0.0.1:6379:6379"  # Only accessible from localhost
+    volumes:
+      - redis_prod_data:/data
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-redis_secure_password}
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - autoparts
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ============================================
+  # Django Backend API (Production)
+  # ============================================
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: autoparts_web_prod
+    restart: always
+    command: >
+      sh -c "
+        python manage.py migrate &&
+        python manage.py collectstatic --noinput &&
+        gunicorn autoparts_kenya.wsgi:application 
+          --bind 0.0.0.0:8000 
+          --workers 4 
+          --worker-class sync 
+          --timeout 60 
+          --access-logfile - 
+          --error-logfile -
+      "
+    env_file: .env
+    environment:
+      DEBUG: "False"
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-redis_secure_password}
+    ports:
+      - "127.0.0.1:8000:8000"  # Only accessible from localhost
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - .:/app
+      - static_prod_volume:/app/staticfiles
+      - media_prod_volume:/app/media
+      - logs_prod_volume:/app/logs
+    networks:
+      - autoparts
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health/" || "exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+
+  # ============================================
+  # Celery Worker (Async Tasks)
+  # ============================================
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: autoparts_celery_prod
+    restart: always
+    command: celery -A autoparts_kenya worker -l info --concurrency=4 --max-tasks-per-child=1000
+    env_file: .env
+    environment:
+      DEBUG: "False"
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-redis_secure_password}
+    depends_on:
+      - db
+      - redis
+      - web
+    volumes:
+      - .:/app
+      - logs_prod_volume:/app/logs
+    networks:
+      - autoparts
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+
+  # ============================================
+  # Celery Beat (Scheduled Tasks)
+  # ============================================
+  celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: autoparts_beat_prod
+    restart: always
+    command: celery -A autoparts_kenya beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    env_file: .env
+    environment:
+      DEBUG: "False"
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-redis_secure_password}
+    depends_on:
+      - db
+      - redis
+      - web
+    volumes:
+      - .:/app
+      - logs_prod_volume:/app/logs
+    networks:
+      - autoparts
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+
+volumes:
+  postgres_prod_data:
+  redis_prod_data:
+  static_prod_volume:
+  media_prod_volume:
+  logs_prod_volume:
+
+networks:
+  autoparts:
+    driver: bridge
