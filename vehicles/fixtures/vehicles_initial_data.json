@@ -1,0 +1,226 @@
+[
+  {
+    "model": "vehicles.vehiclemake",
+    "pk": 1,
+    "fields": {
+      "name": "Toyota",
+      "country": "Japan"
+    }
+  },
+  {
+    "model": "vehicles.vehiclemake",
+    "pk": 2,
+    "fields": {
+      "name": "Nissan",
+      "country": "Japan"
+    }
+  },
+  {
+    "model": "vehicles.vehiclemake",
+    "pk": 3,
+    "fields": {
+      "name": "Mercedes-Benz",
+      "country": "Germany"
+    }
+  },
+  {
+    "model": "vehicles.vehiclemake",
+    "pk": 4,
+    "fields": {
+      "name": "BMW",
+      "country": "Germany"
+    }
+  },
+  {
+    "model": "vehicles.vehiclemake",
+    "pk": 5,
+    "fields": {
+      "name": "Hyundai",
+      "country": "South Korea"
+    }
+  },
+  {
+    "model": "vehicles.vehiclemake",
+    "pk": 6,
+    "fields": {
+      "name": "Suzuki",
+      "country": "Japan"
+    }
+  },
+  {
+    "model": "vehicles.vehiclemake",
+    "pk": 7,
+    "fields": {
+      "name": "Isuzu",
+      "country": "Japan"
+    }
+  },
+  {
+    "model": "vehicles.vehiclemake",
+    "pk": 8,
+    "fields": {
+      "name": "Ford",
+      "country": "USA"
+    }
+  },
+  {
+    "model": "vehicles.vehiclemodel",
+    "pk": 1,
+    "fields": {
+      "make": 1,
+      "name": "Corolla",
+      "year_from": 2010,
+      "year_to": 2025
+    }
+  },
+  {
+    "model": "vehicles.vehiclemodel",
+    "pk": 2,
+    "fields": {
+      "make": 1,
+      "name": "Camry",
+      "year_from": 2008,
+      "year_to": 2025
+    }
+  },
+  {
+    "model": "vehicles.vehiclemodel",
+    "pk": 3,
+    "fields": {
+      "make": 1,
+      "name": "Hilux",
+      "year_from": 2005,
+      "year_to": 2025
+    }
+  },
+  {
+    "model": "vehicles.vehiclemodel",
+    "pk": 4,
+    "fields": {
+      "make": 1,
+      "name": "Harrier",
+      "year_from": 2002,
+      "year_to": 2025
+    }
+  },
+  {
+    "model": "vehicles.vehiclemodel",
+    "pk": 5,
+    "fields": {
+      "make": 2,
+      "name": "Altima",
+      "year_from": 2010,
+      "year_to": 2024
+    }
+  },
+  {
+    "model": "vehicles.vehiclemodel",
+    "pk": 6,
+    "fields": {
+      "make": 2,
+      "name": "Primera",
+      "year_from": 2008,
+      "year_to": 2022
+    }
+  },
+  {
+    "model": "vehicles.vehiclemodel",
+    "pk": 7,
+    "fields": {
+      "make": 2,
+      "name": "Note",
+      "year_from": 2008,
+      "year_to": 2024
+    }
+  },
+  {
+    "model": "vehicles.vehiclemodel",
+    "pk": 8,
+    "fields": {
+      "make": 3,
+      "name": "C-Class",
+      "year_from": 2010,
+      "year_to": 2025
+    }
+  },
+  {
+    "model": "vehicles.vehiclemodel",
+    "pk": 9,
+    "fields": {
+      "make": 3,
+      "name": "E-Class",
+      "year_from": 2012,
+      "year_to": 2025
+    }
+  },
+  {
+    "model": "vehicles.vehiclemodel",
+    "pk": 10,
+    "fields": {
+      "make": 4,
+      "name": "3 Series",
+      "year_from": 2010,
+      "year_to": 2024
+    }
+  },
+  {
+    "model": "vehicles.vehiclemodel",
+    "pk": 11,
+    "fields": {
+      "make": 4,
+      "name": "5 Series",
+      "year_from": 2013,
+      "year_to": 2025
+    }
+  },
+  {
+    "model": "vehicles.vehiclemodel",
+    "pk": 12,
+    "fields": {
+      "make": 5,
+      "name": "i10",
+      "year_from": 2012,
+      "year_to": 2024
+    }
+  },
+  {
+    "model": "vehicles.vehiclemodel",
+    "pk": 13,
+    "fields": {
+      "make": 5,
+      "name": "i20",
+      "year_from": 2015,
+      "year_to": 2024
+    }
+  },
+  {
+    "model": "vehicles.vehiclemodel",
+    "pk": 14,
+    "fields": {
+      "make": 6,
+      "name": "Swift",
+      "year_from": 2010,
+      "year_to": 2024
+    }
+  },
+  {
+    "model": "vehicles.vehiclemodel",
+    "pk": 15,
+    "fields": {
+      "make": 7,
+      "name": "D-Max",
+      "year_from": 2012,
+      "year_to": 2024
+    }
+  },
+  {
+    "model": "vehicles.vehiclemodel",
+    "pk": 16,
+    "fields": {
+      "make": 8,
+      "name": "Ranger",
+      "year_from": 2015,
+      "year_to": 2025
+    }
+  }
+]

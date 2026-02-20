@@ -85,7 +85,7 @@ services:
     volumes:
       - .:/app
       - static_prod_volume:/app/staticfiles
-      - media_prod_volume:/app/media
+      - ./media:/app/media
       - logs_prod_volume:/app/logs
     networks:
       - autoparts

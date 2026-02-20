@@ -1,0 +1,386 @@
+[
+  {
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+      "name": "Engine Oil",
+      "description": "High-quality synthetic and mineral engine oils for all vehicle types",
+      "icon": "oil_can",
+      "created_at": "2025-02-01T08:00:00Z"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 2,
+    "fields": {
+      "name": "Air Filters",
+      "description": "Engine air filters, cabin air filters, and replacement filters",
+      "icon": "filter_alt",
+      "created_at": "2025-02-01T08:00:00Z"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 3,
+    "fields": {
+      "name": "Brake Systems",
+      "description": "Brake pads, rotors, brake fluid, and brake system components",
+      "icon": "stop_circle",
+      "created_at": "2025-02-01T08:00:00Z"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 4,
+    "fields": {
+      "name": "Batteries",
+      "description": "Car batteries, battery terminals, and charging solutions",
+      "icon": "battery_std",
+      "created_at": "2025-02-01T08:00:00Z"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 5,
+    "fields": {
+      "name": "Spark Plugs",
+      "description": "Spark plugs for various engine types and models",
+      "icon": "flare",
+      "created_at": "2025-02-01T08:00:00Z"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 6,
+    "fields": {
+      "name": "Belts & Hoses",
+      "description": "Serpentine belts, timing belts, coolant hoses, and fuel hoses",
+      "icon": "cable",
+      "created_at": "2025-02-01T08:00:00Z"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 7,
+    "fields": {
+      "name": "Suspension Parts",
+      "description": "Shock absorbers, struts, springs, and suspension components",
+      "icon": "directions_car",
+      "created_at": "2025-02-01T08:00:00Z"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 8,
+    "fields": {
+      "name": "Lighting",
+      "description": "Headlights, taillights, fog lights, and LED bulbs",
+      "icon": "lightbulb",
+      "created_at": "2025-02-01T08:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "sku": "OIL-001",
+      "name": "Motul 5W-30 Synthetic Engine Oil 4L",
+      "description": "Premium synthetic engine oil for modern engines. Provides superior protection against wear and corrosion. Suitable for Toyota, Nissan, and most Asian vehicles.",
+      "category": 1,
+      "price": "2450.00",
+      "cost_price": "1800.00",
+      "quantity_in_stock": 45,
+      "reorder_level": 20,
+      "is_featured": true,
+      "year_from": 2015,
+      "year_to": 2025,
+      "created_at": "2025-02-01T09:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+      "sku": "OIL-002",
+      "name": "Shell Helix Ultra 0W-40 4L",
+      "description": "Advanced synthetic oil with excellent fuel economy and engine protection. Compatible with European and luxury vehicles.",
+      "category": 1,
+      "price": "3200.00",
+      "cost_price": "2400.00",
+      "quantity_in_stock": 28,
+      "reorder_level": 15,
+      "is_featured": true,
+      "year_from": 2010,
+      "year_to": 2025,
+      "created_at": "2025-02-01T09:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+      "sku": "OIL-003",
+      "name": "Castrol GTX 15W-40 Conventional Oil 4L",
+      "description": "Reliable mineral-based engine oil delivering proven protection. Good for older vehicles and high-mileage engines.",
+      "category": 1,
+      "price": "1350.00",
+      "cost_price": "900.00",
+      "quantity_in_stock": 65,
+      "reorder_level": 30,
+      "is_featured": false,
+      "year_from": 2000,
+      "year_to": 2020,
+      "created_at": "2025-02-01T09:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+      "sku": "AIR-001",
+      "name": "Toyota Original Air Filter 17801-21040",
+      "description": "Genuine Toyota air filter for Corolla and Camry models. Ensures optimal engine performance and fuel efficiency.",
+      "category": 2,
+      "price": "950.00",
+      "cost_price": "650.00",
+      "quantity_in_stock": 52,
+      "reorder_level": 25,
+      "is_featured": true,
+      "year_from": 2010,
+      "year_to": 2025,
+      "created_at": "2025-02-01T09:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+      "sku": "AIR-002",
+      "name": "Cabin Air Filter for Toyota Vehicles",
+      "description": "Premium cabin air filter for fresh air circulation. Removes dust, pollen, and odors. Fits most Toyota models.",
+      "category": 2,
+      "price": "1200.00",
+      "cost_price": "750.00",
+      "quantity_in_stock": 38,
+      "reorder_level": 20,
+      "is_featured": false,
+      "year_from": 2012,
+      "year_to": 2025,
+      "created_at": "2025-02-01T09:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 6,
+    "fields": {
+      "sku": "BRK-001",
+      "name": "Brake Pad Set Front - Toyota Corolla",
+      "description": "High-quality brake pads with superior stopping power and reduced noise. OEM-compatible for Toyota Corolla (2010+).",
+      "category": 3,
+      "price": "3500.00",
+      "cost_price": "2200.00",
+      "quantity_in_stock": 22,
+      "reorder_level": 10,
+      "is_featured": true,
+      "year_from": 2010,
+      "year_to": 2025,
+      "created_at": "2025-02-01T09:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 7,
+    "fields": {
+      "sku": "BRK-002",
+      "name": "Brake Rotor Disc Front Pair",
+      "description": "Premium brake rotors for smooth braking and minimal vibration. Universal fit with proper specifications.",
+      "category": 3,
+      "price": "4200.00",
+      "cost_price": "2800.00",
+      "quantity_in_stock": 15,
+      "reorder_level": 8,
+      "is_featured": false,
+      "year_from": 2008,
+      "year_to": 2024,
+      "created_at": "2025-02-01T09:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 8,
+    "fields": {
+      "sku": "BAT-001",
+      "name": "Car Battery 60Ah Premium",
+      "description": "High-capacity car battery with excellent cold-start performance. Suitable for most vehicles. 3-year warranty.",
+      "category": 4,
+      "price": "5800.00",
+      "cost_price": "3500.00",
+      "quantity_in_stock": 18,
+      "reorder_level": 10,
+      "is_featured": true,
+      "year_from": 2010,
+      "year_to": 2025,
+      "created_at": "2025-02-01T09:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 9,
+    "fields": {
+      "sku": "BAT-002",
+      "name": "Car Battery 75Ah Heavy Duty",
+      "description": "Heavy-duty battery for commercial vehicles and large engines. Maximum durability and reliability. 2-year warranty.",
+      "category": 4,
+      "price": "7500.00",
+      "cost_price": "4500.00",
+      "quantity_in_stock": 12,
+      "reorder_level": 6,
+      "is_featured": false,
+      "year_from": 2005,
+      "year_to": 2025,
+      "created_at": "2025-02-01T09:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 10,
+    "fields": {
+      "sku": "SPK-001",
+      "name": "Bosch Spark Plug Set of 4",
+      "description": "Premium spark plugs for improved ignition and fuel efficiency. Perfect for Toyota and Nissan engines.",
+      "category": 5,
+      "price": "1800.00",
+      "cost_price": "1000.00",
+      "quantity_in_stock": 42,
+      "reorder_level": 20,
+      "is_featured": true,
+      "year_from": 2012,
+      "year_to": 2025,
+      "created_at": "2025-02-01T09:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 11,
+    "fields": {
+      "sku": "BLT-001",
+      "name": "Serpentine Belt Drive Belt",
+      "description": "Multi-ribbed serpentine belt for smooth operation of engine accessories. Durable and long-lasting.",
+      "category": 6,
+      "price": "2100.00",
+      "cost_price": "1200.00",
+      "quantity_in_stock": 35,
+      "reorder_level": 15,
+      "is_featured": false,
+      "year_from": 2008,
+      "year_to": 2024,
+      "created_at": "2025-02-01T09:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 12,
+    "fields": {
+      "sku": "HSE-001",
+      "name": "Coolant Hose Kit",
+      "description": "Reinforced coolant hoses for reliable engine cooling. Heat-resistant and pressure-rated for optimal performance.",
+      "category": 6,
+      "price": "1600.00",
+      "cost_price": "850.00",
+      "quantity_in_stock": 28,
+      "reorder_level": 12,
+      "is_featured": false,
+      "year_from": 2010,
+      "year_to": 2025,
+      "created_at": "2025-02-01T09:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 13,
+    "fields": {
+      "sku": "SUS-001",
+      "name": "Shock Absorber Pair Front",
+      "description": "Premium shock absorbers for smooth ride and better handling. Gas-filled for stable suspension performance.",
+      "category": 7,
+      "price": "6500.00",
+      "cost_price": "4000.00",
+      "quantity_in_stock": 14,
+      "reorder_level": 8,
+      "is_featured": true,
+      "year_from": 2012,
+      "year_to": 2024,
+      "created_at": "2025-02-01T09:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 14,
+    "fields": {
+      "sku": "SUS-002",
+      "name": "Shock Absorber Pair Rear",
+      "description": "Heavy-duty rear shock absorbers for improved stability and comfort. Tested for durability and performance.",
+      "category": 7,
+      "price": "5800.00",
+      "cost_price": "3500.00",
+      "quantity_in_stock": 16,
+      "reorder_level": 8,
+      "is_featured": false,
+      "year_from": 2010,
+      "year_to": 2024,
+      "created_at": "2025-02-01T09:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 15,
+    "fields": {
+      "sku": "LIT-001",
+      "name": "LED Headlight Bulb Pair H7",
+      "description": "Bright LED headlights with superior visibility and longer lifespan. Easy installation and energy-efficient.",
+      "category": 8,
+      "price": "3400.00",
+      "cost_price": "2000.00",
+      "quantity_in_stock": 31,
+      "reorder_level": 15,
+      "is_featured": true,
+      "year_from": 2015,
+      "year_to": 2025,
+      "created_at": "2025-02-01T09:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 16,
+    "fields": {
+      "sku": "LIT-002",
+      "name": "Tail Light LED Bulb Pair",
+      "description": "Red LED tail light bulbs for safety and visibility. Durable and weather-resistant design.",
+      "category": 8,
+      "price": "1900.00",
+      "cost_price": "1000.00",
+      "quantity_in_stock": 44,
+      "reorder_level": 20,
+      "is_featured": false,
+      "year_from": 2010,
+      "year_to": 2025,
+      "created_at": "2025-02-01T09:00:00Z",
+      "updated_at": "2025-02-10T10:00:00Z"
+    }
+  }
+]

@@ -350,11 +350,22 @@ class ProductViewSet(viewsets.ModelViewSet):
             200: ProductListSerializer(many=True),
         },
     )
+    # @action(detail=False, methods=['get'])
+    # def featured(self, request):
+    #     """Get featured products."""
+    #     featured_products = self.get_queryset().filter(is_featured=True)[:12]
+    #     serializer = ProductListSerializer(featured_products, many=True)
+    #     return Response(serializer.data)
+
     @action(detail=False, methods=['get'])
     def featured(self, request):
         """Get featured products."""
         featured_products = self.get_queryset().filter(is_featured=True)[:12]
-        serializer = ProductListSerializer(featured_products, many=True)
+        serializer = ProductListSerializer(
+            featured_products,
+            many=True,
+            context={'request': request}  # << add this
+        )
         return Response(serializer.data)
     
     @extend_schema(

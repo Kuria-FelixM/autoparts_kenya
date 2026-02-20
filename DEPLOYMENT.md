@@ -122,9 +122,9 @@ docker-compose -f docker-compose.prod.yml up -d
 docker-compose -f docker-compose.prod.yml exec web python manage.py migrate
 docker-compose -f docker-compose.prod.yml exec web python manage.py createsuperuser
 
-# Verify
+health# Verify
 docker-compose -f docker-compose.prod.yml ps
-./manage.sh health
+./manage.sh 
 ```
 
 ✅ **Backend is now running!** Test with:
